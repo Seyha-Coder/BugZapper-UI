@@ -1,75 +1,122 @@
 'use client'
 
 import { useState } from 'react';
-import { SideBarNavigation } from '@/lib/navigations'
+import { SideBarNavigation } from '@/lib/navigations';
 import { IoMdMenu } from "react-icons/io";
-import { HiOutlineChevronRight, HiOutlineChevronDown } from 'react-icons/hi';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { HiOutlineChevronRight, HiOutlineChevronDown } from 'react-icons/hi';
 
 const Sidebar = () => {
-  
   const pathname = usePathname();
-  console.log(pathname , "current path");
-  const [open, setOpen] = useState(true);
-  const toggleOpen = () => {
-    setOpen(!open);
+ 
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpandedWorkSpace, setIsExpandedWorkSpace] = useState(false);
+
+  const toggleSidebar = () => {
+    setisExpanded(!isExpanded);
   };
-  
 
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
 
-  const [isOpenWorkSpace, setIsOpenWorkSpace] = useState(false);
   const toggleWorkSpaceDropdown = () => {
-    setIsOpenWorkSpace(!isOpenWorkSpace);
+    setIsExpandedWorkSpace(!isExpandedWorkSpace);
   };
 
-  // Close when click on another title of menu
-  const toggleWorkSpaceClose = () => {
-    setIsOpenWorkSpace(false);
-  };
 
   return (
-    
-    <div className={`h-screen ${open ? 'sm:w-40 lg:w-72 md:w-64' : 'w-14'} transition-all space-y-3 shadow z-50 text-blue-600`}>
-      <div className={`${open ? '' : 'flex items-center justify-center'} flex justify-between space-x-2 h-[63px] p-0 m-0`}>
-        <div className={`flex items-center justify-center p-2 text-white ${open ? 'flex' : 'hidden'}`}>
-          <img src={'/assets/logo/blueLogo.svg'} alt="Logo" />
+    <>
+      {/*large screens */}
+      <div className="hidden h-screen bg-white shadow-md text-primary lg:flex lg:flex-col lg:w-64">
+        <div className='flex items-center justify-center w-full h-20 p-4'>
+          <img src="/assets/logo/blueLogo.svg" alt="Logo" className='h-auto w-36' />
         </div>
-        <div className={`flex items-center justify-center h-16 p-2 text-2xl  cursor-pointer ${open? 'transition-all': 'w-full '}`} onClick={toggleOpen}>
-          <IoMdMenu className='text-blue-500' />
-        </div>
-      </div>
-      <div className={` text-lg  ${open? 'pr-5 transition-all': ''}`}>
-        {SideBarNavigation.map((link, index) => (
-          <div key={index} >
-            {link.path ? (
-              <Link href={link.path} key={index} className={`${pathname ==link.path? 'bg-primary text-white ': ''} rounded-md flex w-full h-auto p-2  hover:no-underline  items-center text-xl ${open? 'transition-all':'justify-center'}`} onClick={toggleWorkSpaceClose}>
-                <span className=''>{link.icon}</span>
-                <span className={`${open ? 'ml-2 transition-all text-lg' : 'hidden'}`}>{link.tittle}</span>
+        <div className="flex flex-col p-4">
+          {SideBarNavigation.map((item, index) => (
+            item.path ? (
+              <Link href={item.path} key={index} className={`flex items-center p-2 hover:bg-gray-200 rounded ${pathname === item.path ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''}`}>
+                {item.icon}
+                <span className="ml-4">{item.tittle}</span>
               </Link>
             ) : (
-              <div className={` ${isOpenWorkSpace ? 'transition-all duration-400 ' : 'transition-all duration-400'} rounded-md text-xl hover:cursor-pointer flex items-center p-2 space-x-2 hover:bg-gray-200 hover:rounded-r-xl  ${open? 'transition-all':'justify-center'}`} onClick={toggleWorkSpaceDropdown}>
-                <span className='text-xl'>{link.icon}</span>
-                <span className={` ${open ? 'transition-all text-lg' : 'hidden'} flex justify-between items-center w-full`}>
-                  {link.tittle}
-                  {isOpenWorkSpace ? <HiOutlineChevronDown /> : <HiOutlineChevronRight />}
-                </span>
+              <div key={index} className=''>
+                <div className={`flex items-center p-2  rounded cursor-pointer hover:bg-gray-200 transition-all`} onClick={toggleWorkSpaceDropdown}>
+                 <span className='text-xl'> {item.icon}</span>
+                  <div className='flex items-center w-6/12'>
+                 
+                    {/* {item.icon} */}
+                    <span className='ml-4'>{item.tittle}</span>
+                  </div>
+                  <div className='flex justify-end w-6/12'>
+                    {isExpandedWorkSpace ? <HiOutlineChevronDown /> : <HiOutlineChevronRight />}
+                  </div>
+                </div>
+                {isExpandedWorkSpace && (
+                  <div className="pl-8 transition-all">
+                    {item.childrens.map((child, childIndex) => (
+                      <Link href={child.path} key={childIndex} className={`flex items-center p-2 hover:bg-gray-200 rounded ${pathname === child.path ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''}`}>
+                        {child.icon}
+                        <span className="ml-4">{child.tittle}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
-            )}
-            {link.childrens && (
-              <div className={`${isOpenWorkSpace ? 'block  bg-gray-200 transition-all duration-400' : 'hidden transition-all duration-400'} transition-all w-full h-auto no-underline duration-400 text-xl`}>
-                {link.childrens.map((child, childIndex) => (
-                  <Link href={child.path} key={childIndex} className={`${pathname ==child.path? 'bg-primary text-white ': ''} flex items-center  hover:no-underline rounded-md  p-2 pl-5`}>
-                    <span className='text-xl'>{child.icon}</span>
-                    <span className={`${open ? 'transition-all' : 'hidden'} ml-2`}>{child.tittle}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+            )
+          ))}
+        </div>
       </div>
-    </div>
+
+      {/*small screens */}
+      <div className={`lg:hidden fixed inset-y-0 left-0 z-40 transform bg-white text-primary transition-all duration-300 ${isExpanded ? 'w-60' : 'w-20'}`}>
+        <div className={`flex items-center justify-between p-4 h-16`}>
+          <img src="/assets/logo/logo.svg" alt="Logo" className={`h-auto w-16 transition-all duration-300 ${isExpanded ? 'hidden' : 'block'}`} />
+          <img src="/assets/logo/blueLogo.svg" alt="Logo" className={`h-auto w-32 ${isExpanded ? 'block' : 'hidden'}`} />
+          <button onClick={toggleSidebar} className={`p-2 text-2xl transition-all duration-300 ${isExpanded ? 'block' : 'hidden'}`}>
+            <IoMdMenu className='text-blue-500' onClick={toggleExpand} />
+          </button>
+        </div>
+        <div className='h-full shadow-md'>
+          <div className={`flex justify-center ${isExpanded ? 'hidden' : 'block'}`}>
+            <button onClick={toggleSidebar} className={`p-2 text-2xl transition-all duration-300 ${isExpanded ? 'hidden' : 'block'}`}>
+              <IoMdMenu className='text-blue-500' onClick={toggleExpand} />
+            </button>
+          </div>
+          <div className="flex flex-col p-4 mt-4 ">
+            {SideBarNavigation.map((item, index) => (
+              item.path ? (
+                <Link href={item.path} key={index} className={`flex ${isExpanded ? 'items-center' : 'justify-center'} p-2 hover:bg-gray-200 rounded ${pathname === item.path ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''}`}>
+                  <span className='text-xl'>{item.icon}</span>
+                  <span className={`transition-all duration-300 ${isExpanded ? 'block px-2' : 'hidden'}`}>{item.tittle}</span>
+                </Link>
+              ) : (
+                <div key={index} className=''>
+                  <div className={`flex items-center p-2 rounded cursor-pointer hover:bg-gray-200 transition-all ${isExpanded ? 'flex justify-between' : 'justify-center'}`} onClick={toggleWorkSpaceDropdown}>
+                    <div className='flex items-center'>
+                    <span className='text-xl'> {item.icon}</span>
+                      <span className={`ml-4 ${isExpanded ? 'block' : 'hidden'}`}>{item.tittle}</span>
+                    </div>
+                    <HiOutlineChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpandedWorkSpace ? 'rotate-180' : ''} ${isExpanded? 'block': 'hidden'}`} />
+                  </div>
+                  {isExpandedWorkSpace && (
+                    <div className={`transition-all ${isExpanded ? 'pl-8' : 'flex-col items-center pl-6'}`}>
+                      {item.childrens.map((child, childIndex) => (
+                        <Link href={child.path} key={childIndex} className={`flex items-center p-2 hover:bg-gray-200 rounded ${isExpanded? '': ' justify-center'} ${pathname === child.path ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''}`}>
+                          <span>{child.icon}</span>
+                          <span className={`ml-4 ${isExpanded ? 'block' : 'hidden'}`}>{child.tittle}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

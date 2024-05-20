@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <div className="flex w-full h-screen font-poppins">
           
-              <Sidebar/>
+              <Sidebar />
           
           <div className="flex-col w-full h-full">
             <Navbar/>
