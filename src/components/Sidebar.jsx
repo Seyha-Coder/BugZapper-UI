@@ -50,7 +50,9 @@ const Sidebar = () => {
                     <span className='ml-4'>{item.tittle}</span>
                   </div>
                   <div className='flex justify-end w-6/12'>
-                    {isExpandedWorkSpace ? <HiOutlineChevronDown /> : <HiOutlineChevronRight />}
+                    {/* {isExpandedWorkSpace ? <HiOutlineChevronDown /> : <HiOutlineChevronRight />} */}
+                    {/* <HiOutlineChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpandedWorkSpace ? 'rotate-180' : ''} `} /> */}
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-4 h-4 transition-transform duration-300 ${isExpandedWorkSpace ? 'rotate-180' : ''} `} width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" d="m4.427 7.427l3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427"/></svg>
                   </div>
                 </div>
                 {isExpandedWorkSpace && (
@@ -92,20 +94,22 @@ const Sidebar = () => {
                   <span className={`transition-all duration-300 ${isExpanded ? 'block px-2' : 'hidden'}`}>{item.tittle}</span>
                 </Link>
               ) : (
-                <div key={index} className=''>
-                  <div className={`flex items-center p-2 rounded cursor-pointer hover:bg-gray-200 transition-all ${isExpanded ? 'flex justify-between' : 'justify-center'}`} onClick={toggleWorkSpaceDropdown}>
+                <div key={index} className={` ${isExpandedWorkSpace? 'relative': ' ' }`}>
+                  <div className={`flex items-center p-2 rounded cursor-pointer hover:bg-gray-200 transition-all ${isExpanded ? 'flex justify-between' : 'justify-center relative'}`} onClick={toggleWorkSpaceDropdown}>
                     <div className='flex items-center'>
                     <span className='text-xl'> {item.icon}</span>
                       <span className={`ml-4 ${isExpanded ? 'block' : 'hidden'}`}>{item.tittle}</span>
                     </div>
-                    <HiOutlineChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpandedWorkSpace ? 'rotate-180' : ''} ${isExpanded? 'block': 'hidden'}`} />
+                    <svg xmlns="http://www.w3.org/2000/svg" className={`w-4 h-4 transition-transform duration-300 ${isExpandedWorkSpace ? 'rotate-180' : ''}  ${isExpanded? 'block': 'hidden'}`} width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" d="m4.427 7.427l3.396 3.396a.25.25 0 0 0 .354 0l3.396-3.396A.25.25 0 0 0 11.396 7H4.604a.25.25 0 0 0-.177.427"/></svg>
+                    {/* <HiOutlineChevronDown className={`w-4 h-4 transition-transform duration-300 ${isExpandedWorkSpace ? 'rotate-180' : ''} ${isExpanded? 'block': 'hidden'}`} /> */}
                   </div>
                   {isExpandedWorkSpace && (
-                    <div className={`transition-all ${isExpanded ? 'pl-8' : 'flex-col items-center pl-6'}`}>
+                    <div className={`transition-all bg-white  ${isExpanded ? 'pl-8' : 'flex-col items-center absolute shadow-md ml-16 rounded-md'  } ${isExpandedWorkSpace? ' top-0 ': ' ' } `}>
                       {item.childrens.map((child, childIndex) => (
-                        <Link href={child.path} key={childIndex} className={`flex items-center p-2 hover:bg-gray-200 rounded ${isExpanded? '': ' justify-center'} ${pathname === child.path ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''}`}>
-                          <span>{child.icon}</span>
-                          <span className={`ml-4 ${isExpanded ? 'block' : 'hidden'}`}>{child.tittle}</span>
+                        <Link href={child.path} key={childIndex} className={`flex items-center p-2 hover:bg-gray-200 rounded ${isExpanded? '': ' '} ${pathname === child.path ? 'bg-primary text-white hover:bg-primary hover:text-white' : ''}`}>
+                          <span className=''>{child.icon}</span>
+                          {/* <span className={`ml-4 ${isExpanded ? 'block' : 'hidden'}`}>{child.tittle}</span> */}
+                          <span className={`ml-4 `}>{child.tittle}</span>
                         </Link>
                       ))}
                     </div>
