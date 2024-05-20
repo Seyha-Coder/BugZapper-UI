@@ -14,7 +14,7 @@ const Sidebar = () => {
   const [isExpandedWorkSpace, setIsExpandedWorkSpace] = useState(false);
 
   const toggleSidebar = () => {
-    setisExpanded(!isExpanded);
+    setIsExpanded(!isExpanded);
   };
 
   const toggleExpand = () => {
