@@ -31,6 +31,9 @@ module.exports = {
       borderRadius: {
         'radius': '10px', 
       },
+      boxShadow: {
+        'around': '0 1px 1px rgba(0, 0, 0, 0.1), 0 -1px 1px rgba(0, 0, 0, 0.1), 1px 0 2px rgba(0, 0, 0, 0.1), -1px 0 1px rgba(0, 0, 0, 0.1)'
+      },
     },
   },
   plugins: [

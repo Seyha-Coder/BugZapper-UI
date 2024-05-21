@@ -6,12 +6,16 @@ import MemberCard from "@/components/MemberCard";
 import FeedBackCard from "@/components/FeedBackCard";
 import TaskCard from "@/components/TaskCard";
 import AttachmentCard from "@/components/AttachmentCard";
+import CalendarCompont from "@/components/CalendarCompont";
+
 
 export default function Home() {
   return (
     <main className="w-full h-screen p-6">
       {/* <Login/> */}
-      <AttachmentCard/>
+      {/* <AttachmentCard/> */}
+      {/* <TaskCard/> */}
+      <CalendarCompont/>
       
     </main>
   );

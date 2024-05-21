@@ -2,8 +2,8 @@ import React from 'react'
 
 function TaskCard() {
   return (
-    <div className='relative w-[255px] h-[189px] shadow-md rounded-radius'>
-    <button className='absolute px-3 py-1 mb-10 text-red-300 bg-red-200 -top-5 left-[20px] text-paragraph_small_regular rounded-radius'>
+    <div className='relative w-[255px] h-[189px]  rounded-radius shadow-around'>
+    <button className='absolute px-4  mb-10 text-red-300 bg-red-200 -top-[11px] left-[20px] text-paragraph_small_regular rounded-radius'>
         Web Design
     </button>
     <div className='w-full p-4 pt-6'>
