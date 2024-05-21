@@ -5,12 +5,13 @@ import ProjectCard from "@/components/ProjectCard";
 import MemberCard from "@/components/MemberCard";
 import FeedBackCard from "@/components/FeedBackCard";
 import TaskCard from "@/components/TaskCard";
+import AttachmentCard from "@/components/AttachmentCard";
 
 export default function Home() {
   return (
     <main className="w-full h-screen p-6">
       {/* <Login/> */}
-      <TaskCard/>
+      <AttachmentCard/>
       
     </main>
   );
